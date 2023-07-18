@@ -1,0 +1,29 @@
+{% extends 'tasks/base.html'%}
+
+{% block content %}
+        {% if user.is_authenticated %}
+        <h2>Your posts:</h2>
+            {% for task in tasks%}
+                 {% if task.author == user %}
+                       <li><a href="{% url 'task_detail' task.pk %}">{{task.title}}</a></li>
+                 {% endif %}
+        {% endfor %}
+        <h2>Other Posts:</h2>
+        <ol>
+        {% for task in tasks %}
+            {% if task.author != user%}
+                <li><a href="{% url 'task_detail' task.pk %}">{{task.title}}</a></li>
+            {% endif %}
+        {% endfor %}
+        </ol>
+        {% else %}
+        <h2>All Posts:</h2>
+        <ol>
+        {% for task in tasks %}
+            {% if task.author != user%}
+                <li><a href="{% url 'task_detail' task.pk %}">{{task.title}}</a></li>
+            {% endif %}
+        {% endfor %}
+        </ol>
+        {% endif %}
+{% endblock %}
